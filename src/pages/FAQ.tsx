@@ -26,7 +26,6 @@ const FAQ = () => {
           よくある質問
         </h1>
 
-        {/* Category Tabs */}
         <div className="flex space-x-4 mb-8 justify-center">
           {categories.map((category) => (
             <button
@@ -44,7 +43,6 @@ const FAQ = () => {
           ))}
         </div>
 
-        {/* FAQ Items */}
         <div className="space-y-4">
           {filteredFAQs.map((item, index) => (
             <div
@@ -77,7 +75,7 @@ const FAQ = () => {
                     transition={{ duration: 0.2 }}
                     className="overflow-hidden"
                   >
-                    <div className="px-6 py-4 text-gray-600 bg-gradient-to-br from-white to-gray-50 border-t border-gray-100">
+                    <div className="px-6 py-4 text-gray-600 bg-gray-50">
                       {item.answer}
                     </div>
                   </motion.div>
