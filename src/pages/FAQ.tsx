@@ -1,22 +1,18 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { faqData, FAQItem } from "@/lib/faq-data";
+import { faqData } from "@/lib/faq-data";
 import { cn } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
 
 const FAQ = () => {
   const [selectedCategory, setSelectedCategory] = useState<"料金" | "サービス">("料金");
-  const [openItems, setOpenItems] = useState<number[]>([]);
+  const [openItem, setOpenItem] = useState<number | null>(null);
 
   const categories = ["料金", "サービス"] as const;
   const filteredFAQs = faqData.filter((item) => item.category === selectedCategory);
 
   const toggleItem = (index: number) => {
-    setOpenItems((current) =>
-      current.includes(index)
-        ? current.filter((i) => i !== index)
-        : [...current, index]
-    );
+    setOpenItem(openItem === index ? null : index);
   };
 
   return (
@@ -53,7 +49,7 @@ const FAQ = () => {
                 onClick={() => toggleItem(index)}
                 className={cn(
                   "w-full px-6 py-4 text-left flex justify-between items-center transition-colors duration-200",
-                  openItems.includes(index)
+                  openItem === index
                     ? "bg-blue-50"
                     : "hover:bg-gray-50"
                 )}
@@ -62,12 +58,12 @@ const FAQ = () => {
                 <ChevronDown
                   className={cn(
                     "w-5 h-5 text-blue-500 transition-transform duration-200",
-                    openItems.includes(index) ? "transform rotate-180" : ""
+                    openItem === index ? "transform rotate-180" : ""
                   )}
                 />
               </button>
               <AnimatePresence>
-                {openItems.includes(index) && (
+                {openItem === index && (
                   <motion.div
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
