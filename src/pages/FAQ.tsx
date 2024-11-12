@@ -33,10 +33,10 @@ const FAQ = () => {
               key={category}
               onClick={() => setSelectedCategory(category)}
               className={cn(
-                "px-6 py-2 rounded-full text-sm font-medium transition-colors",
+                "px-6 py-2 rounded-full text-sm font-medium transition-colors duration-200 shadow-sm",
                 selectedCategory === category
-                  ? "bg-blue-500 text-white"
-                  : "bg-white text-gray-600 hover:bg-gray-100"
+                  ? "bg-blue-500 text-white shadow-md transform scale-105"
+                  : "bg-white text-gray-600 hover:bg-gray-50 hover:text-blue-500"
               )}
             >
               {category}
@@ -49,16 +49,21 @@ const FAQ = () => {
           {filteredFAQs.map((item, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg shadow-sm overflow-hidden"
+              className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100 hover:shadow-md transition-shadow duration-200"
             >
               <button
                 onClick={() => toggleItem(index)}
-                className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50"
+                className={cn(
+                  "w-full px-6 py-4 text-left flex justify-between items-center transition-colors duration-200",
+                  openItems.includes(index)
+                    ? "bg-blue-50"
+                    : "hover:bg-gray-50"
+                )}
               >
-                <span className="font-medium text-gray-900">{item.question}</span>
+                <span className="font-medium text-gray-900 flex-1 pr-4">{item.question}</span>
                 <ChevronDown
                   className={cn(
-                    "w-5 h-5 text-gray-500 transition-transform",
+                    "w-5 h-5 text-blue-500 transition-transform duration-200",
                     openItems.includes(index) ? "transform rotate-180" : ""
                   )}
                 />
@@ -66,13 +71,13 @@ const FAQ = () => {
               <AnimatePresence>
                 {openItems.includes(index) && (
                   <motion.div
-                    initial={{ height: 0 }}
-                    animate={{ height: "auto" }}
-                    exit={{ height: 0 }}
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                     className="overflow-hidden"
                   >
-                    <div className="px-6 py-4 text-gray-600 border-t border-gray-100">
+                    <div className="px-6 py-4 text-gray-600 bg-gradient-to-br from-white to-gray-50 border-t border-gray-100">
                       {item.answer}
                     </div>
                   </motion.div>
